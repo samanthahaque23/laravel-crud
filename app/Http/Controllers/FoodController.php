@@ -1,13 +1,15 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Food;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
+    
+
     // Display a listing of the food menu items
     public function index()
     {
@@ -46,7 +48,7 @@ class FoodController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('foods.index');
+        return redirect()->route('foods.index')->with('success', 'Food item created successfully.');
     }
 
     // Display the specified food item
@@ -90,7 +92,7 @@ class FoodController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('foods.index');
+        return redirect()->route('foods.index')->with('success', 'Food item updated successfully.');
     }
 
     // Remove the specified food item from storage
@@ -100,6 +102,6 @@ class FoodController extends Controller
             Storage::delete('public/' . $food->image);
         }
         $food->delete();
-        return redirect()->route('foods.index');
+        return redirect()->route('foods.index')->with('success', 'Food item deleted successfully.');
     }
 }
